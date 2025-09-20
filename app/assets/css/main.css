@@ -1,2 +1,73 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@theme {
+  --font-heading: "SUSE", sans-serif;
+  --font-body: "Raleway", sans-serif;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-yellow-primary: #f4d35e;
+
+  --color-orange-primary: #ee964b;
+  --color-orange-secondary: #f95738;
+
+  --color-cream-primary: #faf0ca;
+
+  --color-blue-primary: #0d3b66;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 200;
+  font-style: normal;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  text-transform: none;
+}
+
+.body {
+  font-family: var(--font-body);
+}
+
+.bg-cream-primary {
+  background-color: var(--color-cream-primary);
+}
+
+.bg-blue-primary {
+  background-color: var(--color-blue-primary);
+}
+
+.bg-orange-primary {
+  background-color: var(--color-orange-primary);
+}
+
+.bg-orange-secondary {
+  background-color: var(--color-orange-secondary);
+}
+
+.bg-yellow-primary {
+  background-color: var(--color-yellow-primary);
+}
+
+.color-cream-primary {
+  color: var(--color-cream-primary);
+}
+
+.color-blue-primary {
+  color: var(--color-blue-primary);
+}
+
+.color-orange-primary {
+  color: var(--color-orange-primary);
+}
+
+.color-orange-secondary {
+  color: var(--color-orange-secondary);
+}
+
+.color-yellow-primary {
+  color: var(--color-yellow-primary);
+}
