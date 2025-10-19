@@ -70,8 +70,8 @@ const boardMembers = [
     name: "Yaaswa's Dad",
     position: "Chief Operating Officer",
     bio: "Yaaswa's Dad oversees our construction operations, ensuring seamless project delivery and maintaining our high standards of quality and safety.",
-    image:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+    // image:
+    //   "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
     linkedin: "https://linkedin.com/in/yaaswamanigiri",
     twitter: "https://twitter.com/yaaswamanigiri",
   },
