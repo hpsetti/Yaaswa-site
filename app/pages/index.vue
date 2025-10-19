@@ -1,134 +1,153 @@
 <script lang="ts" setup>
-import type { NavigationMenuItem } from "@nuxt/ui";
-
 definePageMeta({
-  layout: "home",
+  layout: "default",
 });
 
-const route = useRoute();
+// Background image state
+const currentBackgroundImage = ref("/images/HeroImages/hero-image-1.jpg");
+const nextBackgroundImage = ref("");
+const isTransitioning = ref(false);
 
-const items = computed<NavigationMenuItem[]>(() => [
-  {
-    label: "Docs",
-    to: "/docs/getting-started",
-    icon: "i-lucide-book-open",
-    active: route.path.startsWith("/docs/getting-started"),
-  },
-  {
-    label: "Components",
-    to: "/docs/components",
-    icon: "i-lucide-box",
-    active: route.path.startsWith("/docs/components"),
-  },
-  {
-    label: "Figma",
-    icon: "i-simple-icons-figma",
-    to: "https://go.nuxt.com/figma-ui",
-    target: "_blank",
-  },
-  {
-    label: "Releases",
-    icon: "i-lucide-rocket",
-    to: "https://github.com/nuxt/ui/releases",
-    target: "_blank",
-  },
-]);
+// Handle background change from carousel
+const handleBackgroundChange = (backgroundImage: string) => {
+  console.log("Background changing to:", backgroundImage);
 
-// onMounted(async () => {
-//   await nextTick();
+  if (backgroundImage === currentBackgroundImage.value) return;
 
-// });
+  isTransitioning.value = true;
+  nextBackgroundImage.value = backgroundImage;
 
-// const target = ref<HTMLElement | null>(null);
-// // const io = null;
+  // Start the transition
+  setTimeout(() => {
+    currentBackgroundImage.value = backgroundImage;
+    nextBackgroundImage.value = "";
+    isTransitioning.value = false;
+  }, 500); // Half of the transition duration
+};
 
-// onMounted(async () => {
-//   const observer = new IntersectionObserver(
-//     (entries) => {
-//       entries.forEach((entry) => {
-//         if (entry.isIntersecting) {
-//           console.log("User is at the correct window view!");
-//           // You can trigger animations, tracking, etc.
-//         }
-//       });
-//     },
-//     { threshold: 0.5 }
-//   ); // 0.5 means 50% of element should be visible
+// Computed styles for dual background layers
+const currentBackgroundStyle = computed(() => ({
+  backgroundImage: `url(${currentBackgroundImage.value})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+}));
 
-//   observer.observe(target.value);
-// });
+const nextBackgroundStyle = computed(() => ({
+  backgroundImage: nextBackgroundImage.value
+    ? `url(${nextBackgroundImage.value})`
+    : "none",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+}));
 </script>
 
 <template>
   <div class="">
     <div class="home-hero">
-      <UHeader
-        :toggle="{
-          color: 'neutral',
-          variant: 'subtle',
-          class: 'rounded-full',
-        }"
-        class="bg-transparent z-10"
-      >
-        <template #title> Sri Devi Constructions </template>
+      <!-- Current background layer -->
+      <div
+        class="background-layer current-background"
+        :style="currentBackgroundStyle"
+      />
 
-        <UNavigationMenu :items="items" />
+      <!-- Next background layer for transition -->
+      <div
+        class="background-layer next-background"
+        :style="nextBackgroundStyle"
+        :class="{ transitioning: isTransitioning }"
+      />
 
-        <template #right>
-          <!-- <UColorModeButton /> -->
-
-          <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
-            <UButton
-              color="neutral"
-              variant="ghost"
-              to="https://github.com/nuxt/ui"
-              target="_blank"
-              icon="i-simple-icons-github"
-              aria-label="GitHub"
-            />
-          </UTooltip>
-        </template>
-
-        <template #body>
-          <UNavigationMenu
-            :items="items"
-            orientation="vertical"
-            class="-mx-2.5"
-          />
-        </template>
-      </UHeader>
-      <div class="h-full">
-        <HomeHeroCarousel />
-      </div>
-    </div>
-    <div class="home-content">
-      <div class="home-content-inner">
-        <div class="home-content-inner-left">
-          <!-- <h1 id="my-section" ref="target" class="odometer" data-target="5000">
-            Welcome to the home page
-          </h1> -->
-          <UICounter
-            :end="12345"
-            :duration="1800"
-            :format="true"
-            :decimals="0"
-          />
-        </div>
-        <div class="home-content-inner-right">
-          <h1>Welcome to the home page</h1>
+      <!-- Content layer -->
+      <div class="content-layer">
+        <div class="h-full">
+          <HomeHeroCarousel @background-change="handleBackgroundChange" />
         </div>
       </div>
     </div>
+
+    <!-- Stats Section -->
+    <HomeStatsSection />
+
+    <!-- Trusted Partners -->
+    <HomeTrustedPartners />
+    <!-- Selected Projects -->
+    <HomeSelectedProjects />
+
+    <!-- Our Story Carousel -->
+    <HomeOurStoryCarousel />
+
+    <!-- Testimonials -->
+    <HomeTestimonials />
+
+    <!-- News and Updates -->
+    <HomeNewsroomSection />
   </div>
 </template>
 
 <style>
 .home-hero {
-  background-image: url("~/assets/images/HeroImages/hero-image-1.jpg");
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+/* Background layers */
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+}
+
+.current-background {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.next-background {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.next-background.transitioning {
+  opacity: 1;
+}
+
+/* Content layer */
+.content-layer {
+  position: relative;
+  z-index: 10;
+  height: 100%;
   width: 100%;
+}
+
+/* Dark overlay for better text readability */
+.content-layer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
 </style>
