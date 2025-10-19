@@ -80,8 +80,8 @@ const boardMembers = [
     name: "Yaaswa's Mom",
     position: "Head of Projects",
     bio: "Yaaswa's Mom manages our project portfolio, ensuring timely completion and quality delivery of all construction projects.",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+    // image:
+    //   "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
     linkedin: "https://linkedin.com/in/vikramsingh",
     twitter: null,
   },
