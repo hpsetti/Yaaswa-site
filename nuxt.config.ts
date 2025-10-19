@@ -21,4 +21,7 @@ export default defineNuxtConfig({
   head: {
     title: "Sri Devi Constructions", // Other meta information,
   },
+  app: {
+    baseURL: "Yaaswa-site/",
+  },
 });
